@@ -5,6 +5,8 @@ public abstract class Paddle : MonoBehaviour
 {
     protected Rigidbody2D rb;
 
+    public bool isNeonPong = false;
+
     public float speed = 10f;
     [Tooltip("Changes how the ball bounces off the paddle depending on where it hits the paddle. The further from the center of the paddle, the steeper the bounce angle.")]
     public bool useDynamicBounce = false;
@@ -17,7 +19,11 @@ public abstract class Paddle : MonoBehaviour
     public void ResetPosition()
     {
         rb.velocity = Vector2.zero;
-        rb.position = new Vector2(rb.position.x, 0f);
+        if (isNeonPong) {
+            rb.position = new Vector2(0f, rb.position.y);
+        } else {
+            rb.position = new Vector2(rb.position.x, 0f);
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

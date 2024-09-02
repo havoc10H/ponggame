@@ -9,6 +9,8 @@ public class Ball : MonoBehaviour
     public float maxSpeed = Mathf.Infinity;
     public float currentSpeed { get; set; }
 
+    public bool isThisNeonPong = false;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -22,12 +24,32 @@ public class Ball : MonoBehaviour
 
     public void AddStartingForce()
     {
+        if (isThisNeonPong) {
+            AddStartingForceNeon();
+            return;
+        }
         // Flip a coin to determine if the ball starts left or right
         float x = Random.value < 0.5f ? -1f : 1f;
 
         // Flip a coin to determine if the ball goes up or down. Set the range
         // between 0.5 -> 1.0 to ensure it does not move completely horizontal.
         float y = Random.value < 0.5f ? Random.Range(-1f, -0.5f)
+                                      : Random.Range(0.5f, 1f);
+
+        // Apply the initial force and set the current speed
+        Vector2 direction = new Vector2(x, y).normalized;
+        rb.AddForce(direction * baseSpeed, ForceMode2D.Impulse);
+        currentSpeed = baseSpeed;
+    }
+
+    public void AddStartingForceNeon()
+    {
+        // Flip a coin to determine if the ball starts left or right
+        float y = Random.value < 0.5f ? -1f : 1f;
+
+        // Flip a coin to determine if the ball goes up or down. Set the range
+        // between 0.5 -> 1.0 to ensure it does not move completely horizontal.
+        float x = Random.value < 0.5f ? Random.Range(-1f, -0.5f)
                                       : Random.Range(0.5f, 1f);
 
         // Apply the initial force and set the current speed
