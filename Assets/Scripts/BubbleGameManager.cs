@@ -19,7 +19,7 @@ public class BubbleGameManager : MonoBehaviour
 		connectedBubbles = new List<Transform>();
 		bubblesToDrop = new List<Transform>();
 		bubblesToDissolve = new List<Transform>();
-		DontDestroyOnLoad(gameObject);
+		// DontDestroyOnLoad(gameObject);
 	}
 	#endregion
 
